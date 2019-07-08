@@ -97,7 +97,7 @@ elif [ "$1" == "done" ]; then
             echo "Merging into development branch..."
             git checkout development
             git merge ${current}
-            git push origin development
+            git push -u origin development
             delete_branch
             exit 0
             ;;
@@ -105,7 +105,7 @@ elif [ "$1" == "done" ]; then
             echo "Merging into development branch..."
             git checkout development
             git merge ${current}
-            git push origin development
+            git push -u origin development
 
             # Infinite loop, only way out (except for Ctrl+C) is to answer yes or no.
             while true; do
