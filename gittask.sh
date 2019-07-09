@@ -111,6 +111,10 @@ elif [ "$1" == "done" ]; then
             echo "Merging into development branch..."
             git checkout development
             git merge ${current}
+	    git add -A
+	    echo "Please enter the commit message"
+            read commit_msg
+            git commit -m "$commit_msg" -a
             git push -u origin development
 
             # Infinite loop, only way out (except for Ctrl+C) is to answer yes or no.
