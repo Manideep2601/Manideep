@@ -94,15 +94,20 @@ elif [ "$1" == "done" ]; then
     current=`git branch | awk '/\*/{print $2}'`
     case ${current} in
         feature* )
+		git status
+		git add -A
+		echo "Please enter the commit message"
+		read commit_msg
+		git commit -m "$commit_msg" -a
 	    echo "Pushing the local branch into remote"	
 	    git push --set-upstream origin ${current}
             echo "Merging into development branch..."
             git checkout development
             git merge ${current}
-	    git add -A
-	    echo "Please enter the commit message"
-	    read commit_msg
-	    git commit -m "$commit_msg" -a 
+	    ###git add -A
+	    ###echo "Please enter the commit message"
+	    ###read commit_msg
+	    ###git commit -m "$commit_msg" -a 
             git push -u origin development
             #delete_branch
             exit 0
