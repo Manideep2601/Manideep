@@ -113,13 +113,16 @@ elif [ "$1" == "done" ]; then
             exit 0
             ;;
         release* )
+			git status
+			git add -A
+			echo "Please enter the release commit message"
+			read commit_msg
+			git commit -m "$commit_msg" -a
+			echo "pushing the local release branch to remote"
+			git push --set-upstream origin ${current}
             echo "Merging into development branch..."
             git checkout development
             git merge ${current}
-	    git add -A
-	    echo "Please enter the commit message"
-            read commit_msg
-            git commit -m "$commit_msg" -a
             git push -u origin development
 
             # Infinite loop, only way out (except for Ctrl+C) is to answer yes or no.
@@ -134,7 +137,7 @@ elif [ "$1" == "done" ]; then
                         define_tag
                         git tag -s ${version_number} -m ${version_note}
                         git push --tags origin master
-                        delete_branch
+                        #delete_branch
                         break
                         ;;
                     [Nn]* )
@@ -146,7 +149,7 @@ elif [ "$1" == "done" ]; then
                         ;;
                 esac
             done
-            exit 0
+            exit 
             ;;
         hotfix* )
             git checkout master
